@@ -1,0 +1,58 @@
+import pandas as pd
+
+def clean_missing_data(df, strategy="mean", fill_value=None, drop_threshold=None):
+    """
+    Cleans missing data in a DataFrame based on the specified strategy.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to clean.
+        strategy (str): The strategy to use for filling missing values. 
+                        Options are "mean", "median", "mode", "constant", "drop_rows", "drop_cols".
+        fill_value (any): The value to fill in if strategy is "constant". Ignored otherwise.
+        drop_threshold (float): The threshold for dropping rows/columns, between 0 and 1. 
+                                If None, drops rows/columns with any missing values.
+
+    Returns:
+        pd.DataFrame: The cleaned DataFrame.
+    """
+    if strategy == "mean":
+        df_cleaned = df.fillna(df.mean())
+    elif strategy == "median":
+        df_cleaned = df.fillna(df.median())
+    elif strategy == "mode":
+        df_cleaned = df.fillna(df.mode().iloc[0])
+    elif strategy == "constant":
+        if fill_value is not None:
+            df_cleaned = df.fillna(fill_value)
+        else:
+            raise ValueError("fill_value must be specified when using 'constant' strategy.")
+    elif strategy == "drop_rows":
+        if drop_threshold is not None:
+            df_cleaned = df.dropna(thresh=int(drop_threshold * df.shape[1]))
+        else:
+            df_cleaned = df.dropna()
+    elif strategy == "drop_cols":
+        if drop_threshold is not None:
+            df_cleaned = df.dropna(axis=1, thresh=int(drop_threshold * df.shape[0]))
+        else:
+            df_cleaned = df.dropna(axis=1)
+    else:
+        raise ValueError("Invalid strategy. Choose from 'mean', 'median', 'mode', 'constant', 'drop_rows', or 'drop_cols'.")
+    
+    return df_cleaned
+
+# Example usage
+if __name__== '__main__':
+    # Sample DataFrame with missing values
+    data = {
+        'A': [1, 2, None, 4, 5],
+        'B': [None, 2, 3, None, 5],
+        'C': [1, None, None, 4, None]
+    }
+    df = pd.DataFrame(data)
+    
+    # Clean the data using the mean strategy
+    cleaned_df = clean_missing_data(df, strategy="mean")
+    
+    print("Original DataFrame:\n", df)
+    print("\nCleaned DataFrame:\n", cleaned_df)
