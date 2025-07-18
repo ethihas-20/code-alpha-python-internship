@@ -1,8 +1,7 @@
-# 🛠️ Python Mini Projects – Task Automation & Games
+#Python Mini Projects – Task Automation & Games
 
 Welcome to my repository of beginner-friendly Python projects!
 
-## 📌 Project List
 
 ### ✅ Task 1 – Hangman Game
 A simple terminal-based Hangman game built using Python.
@@ -33,19 +32,11 @@ Automates file-related tasks:
 
 ---
 
-## 🧠 What I Learned
+##  What I Learned
 - Basics of file automation
 - Game logic in Python
 - Clean code and modular structure
 
 ---
 
-## 📂 How to Run
-```bash
-git clone https://github.com/ethihas-20/your-repo-name
-cd your-repo-name
-python task1_hangman.py
-
-
----
 
